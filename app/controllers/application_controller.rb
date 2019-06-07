@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
           true,
           { algorithm: 'HS256' }
         )
-        User.find_by(id: decoded_token[0]["user_id"])
+        User.find_by(id: decoded_token[0]["user_id"]) #what we get if we're able to decode the jot and pass correct credentials
       rescue JWT::ExpiredSignature
         nil
       end
@@ -20,10 +20,19 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  def authenticate_user
+  def authenticate_user 
     unless current_user
       render json: {}, status: :unauthorized
     end
   end
 
+   def authenticate_admin 
+    unless current_user && current_user.admin
+      render json: {}, status: :unauthorized
+    end
+  end
+
 end
+
+
+#undefined method 'admin' for nil:NilClass means 

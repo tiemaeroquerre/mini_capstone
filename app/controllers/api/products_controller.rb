@@ -1,6 +1,6 @@
 class Api::ProductsController < ApplicationController
 
-  before_action :authenticate_user
+  before_action :authenticate_admin, only: [:create, :update, :destroy]
 
   def index
     @products = Product.all
@@ -19,11 +19,16 @@ class Api::ProductsController < ApplicationController
       else
         @products = @products.order(:price)
       end #GO OVER THIS AFTER CLASS
+    end
 
     # if params[:sort] == "price"
     #   @products = @products.order(:price)
     # end
     
+    if params[:category]
+      category = Category.find_by(name: params[:category])
+      @products = category.products 
+    end
 
     render 'index.json.jbuilder'
   end
@@ -70,6 +75,5 @@ class Api::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @product.destroy
     render json: {message: "Product successfully destroyed!"}
-  end
-end 
 end
+  end 

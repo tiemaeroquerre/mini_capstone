@@ -1,0 +1,12 @@
+<h2><%= @product.name %></h2>
+<img src= "<%=@product.images.first.image_url%>" alt="">
+<h4> Product Description: <%= @product.description %> </h4>
+<h5>Price: <%= @product.price %></h5>
+<h5>Stock Status: <%= @product.in_stock %></h5>
+<div>
+<a href = "/products/<%= @product.id%>/edit"> Edit </a>
+</div>
+
+<div>
+<a href= "/products/<%= @product.id%>" data-method = "delete" rel="nofollow">Delete</a> 
+</div>

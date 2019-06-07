@@ -1,0 +1,11 @@
+<h1> Our Products </h1>
+
+<% @products.each do |product| %>
+  <h2> <a href="/products/<%= product.id %>"> <%=product.name %></a></h2>
+  <img src= "<%=product.images.first.image_url%>" alt="">
+  <h3> Product Description: <%= product.description %> </h3>
+  <h5>Price: <%= product.price %></h5>
+  <h5>Stock Status: <%= product.in_stock %></h5>
+<% end %>
+
+<!--  <a href="/products/1">Go to first product</a> --> 

@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_20_204155) do
+ActiveRecord::Schema.define(version: 2019_05_24_181202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carted_products", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "product_id"
+    t.integer "quantity"
+    t.string "status"
+    t.integer "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "images", force: :cascade do |t|
     t.string "image_url"
@@ -24,12 +40,17 @@ ActiveRecord::Schema.define(version: 2019_05_20_204155) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "quantity"
-    t.integer "product_id"
     t.decimal "subtotal", precision: 9, scale: 2
     t.decimal "tax", precision: 9, scale: 2
     t.decimal "total", precision: 9, scale: 2
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "product_categories", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -42,6 +63,11 @@ ActiveRecord::Schema.define(version: 2019_05_20_204155) do
     t.datetime "updated_at", null: false
     t.boolean "in_stock", default: true
     t.integer "supplier_id"
+  end
+
+  create_table "removes_attributes_from_orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -58,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_05_20_204155) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: false
   end
 
 end
